@@ -1,0 +1,19 @@
+---
+# Config file for cleanup.py
+# yaml-tastic
+
+# setting basedir makes all directory-list items relative to this
+#basedir:
+
+# Number of days of logs to retain, in whole days
+days: 7
+
+# Can be absolute (10G, 10T, 10M) or a % of available partition space
+storage_limit: 85%
+
+# List of directories, if basedir is set, then it is prepended onto these
+directory_targets:
+  - /home/murf/backups
+  - /home/murf/var/log
+
+
