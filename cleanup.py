@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 # Copyright (c) 2020 damian@orchestrating-automatons.eu
 # Furthering my Learning Python series, I now try to manage my backups
 # Licensed under the GNU GPL v3
@@ -31,6 +31,10 @@ def load_config(configfile):
 
     if os.path.exists(CONFIGFILE):
         confpath = os.getcwd() + "/"
+        if DEBUG:
+            print("Using config: " + confpath + CONFIGFILE)
+    elif os.path.exists(os.path.realpath(__file__) + CONFIGFILE):
+        confpath = os.path.realpath(__file__)
         if DEBUG:
             print("Using config: " + confpath + CONFIGFILE)
     elif os.path.exists("../etc/" + CONFIGFILE):
