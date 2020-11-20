@@ -13,7 +13,7 @@ storage_limit: 85%
 
 # List of directories, if basedir is set, then it is prepended onto these
 directory_targets:
-  - /home/murf/backups
-  - /home/murf/var/log
+  - /backup-dir1
+  - /some/other/dir
 
 
