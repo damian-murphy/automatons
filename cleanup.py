@@ -86,6 +86,7 @@ def main():
                     count = count + 1
 
         print("Done - removed " + str(count) + " files from " + item + ", hopefully that's what was desired.")
+        count = 0
 
     print("0 OK, 0:1")
 
