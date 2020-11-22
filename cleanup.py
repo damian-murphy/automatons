@@ -33,26 +33,26 @@ def load_config(configfile):
         confpath = os.getcwd() + "/"
         if DEBUG:
             print("Using config: " + confpath + CONFIGFILE)
-    elif os.path.exists(os.path.realpath(__file__) + CONFIGFILE):
-        confpath = os.path.realpath(__file__)
+    elif os.path.exists(os.path.dirname(os.path.realpath(__file__)) + "/" + CONFIGFILE):
+        confpath = os.path.dirname(os.path.realpath(__file__))
         if DEBUG:
-            print("Using config: " + confpath + CONFIGFILE)
+            print("Using config: " + confpath + "/" + CONFIGFILE)
     elif os.path.exists("../etc/" + CONFIGFILE):
         confpath = "../etc/"
         if DEBUG:
-            print("Using config: " + confpath + CONFIGFILE)
+            print("Using config: " + confpath + "/" + CONFIGFILE)
     elif os.path.exists(CONFPATH + CONFIGFILE):
         confpath = CONFPATH
         if DEBUG:
-            print("Using config: " + confpath + CONFIGFILE)
+            print("Using config: " + confpath + "/" + CONFIGFILE)
     else:
         print("Q - Parameter error, " + configfile +
-              " not found or readable in ../etc, " + CONFPATH + ", " + os.getcwd() + " or " + os.path.realpath(__file__))
+              " not found or readable in ../etc, " + CONFPATH + ", " + os.getcwd() + " or " + os.path.dirname(os.path.realpath(__file__)))
         exit(2)
 
     # Load the config file
     try:
-        config = yaml.safe_load(open(confpath + configfile, 'r'))
+        config = yaml.safe_load(open(confpath + "/" + configfile, 'r'))
         # TODO: Put in checks here so that the config is confirmed or set to some defaults.
         return config
     except (yaml.YAMLError, IOError) as e:
