@@ -47,7 +47,7 @@ def load_config(configfile):
             print("Using config: " + confpath + CONFIGFILE)
     else:
         print("Q - Parameter error, " + configfile +
-              " not found or readable in ../etc, " + CONFPATH + ", " + os.getcwd()) + " or " + os.path.realpath(__file__)
+              " not found or readable in ../etc, " + CONFPATH + ", " + os.getcwd() + " or " + os.path.realpath(__file__))
         exit(2)
 
     # Load the config file
