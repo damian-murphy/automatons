@@ -5,6 +5,7 @@
 #
 import argparse
 import os
+import syslog
 import time
 import yaml
 
@@ -12,6 +13,11 @@ CONFIGFILE = "cleanup-config.yml"
 CONFPATH = "/usr/local/etc/"
 DEBUG = False
 
+# TODO: Logging of output
+def logger():
+
+
+# TODO: standardise the logging
 
 def parse_cmdline():
     # Parse any command line options. Currently, we only support one.
