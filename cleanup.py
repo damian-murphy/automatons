@@ -5,7 +5,6 @@
 #
 import argparse
 import os
-import syslog
 import time
 import yaml
 
@@ -15,9 +14,8 @@ DEBUG = False
 
 # TODO: Logging of output
 def logger():
-
-
-# TODO: standardise the logging
+    # TODO: standardise the logging
+    return True
 
 def parse_cmdline():
     # Parse any command line options. Currently, we only support one.
