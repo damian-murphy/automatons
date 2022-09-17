@@ -15,6 +15,9 @@ DEBUG = False
 # TODO: Logging of output
 def logger():
     # TODO: standardise the logging
+    # Need to output to screen if it's a tty (so check isatty())
+    # Log the files to a specific log and then log activity to syslog
+    # standardise this into a module
     return True
 
 def parse_cmdline():
