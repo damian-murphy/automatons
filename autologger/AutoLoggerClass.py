@@ -39,7 +39,7 @@ class AutoLogger:
         self.clh = logging.StreamHandler()  # console logger
 
         if self.has_tty:
-            self.clh.setLevel(logging.NOTSET) # catch anything and copy to the console
+            self.clh.setLevel(logging.NOTSET)  # catch anything and copy to the console
         else:
             self.clh.setLevel(logging.CRITICAL)  # only send critical errors to the console otherwise
 
