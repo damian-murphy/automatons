@@ -1,11 +1,10 @@
 #!/usr/bin/python3
-# Copyright (c) 2020 damian@orchestrating-automatons.eu
-# Furthering my Learning Python series, I now try to manage my backups
+# Copyright (c) 2022 damian@orchestrating-automatons.eu
+# Watcher: Observe a process and restart or alert as required
 # Licensed under the GNU GPL v3
 #
 """
-    Backup file cleaning automaton.
-    Maintains a set of files within a certain number.
+    Observe a process and restart or alert as required.
 """
 
 import argparse
@@ -16,7 +15,7 @@ import yaml
 
 # Set global DEBUG to false by default, can be changed with CLI flag
 DEBUG = False
-DEFAULT_CONFIGNAME = "cleanup-config.yml"
+DEFAULT_CONFIGNAME = "watcher-config.yml"
 DEFAULT_CONFIGPATH = "/usr/local/etc/"
 
 
@@ -117,23 +116,6 @@ def main():
 
     if DEBUG:
         print(config)
-
-    for item in config['directory_targets']:
-        # take a folder at a time, obvs.
-        for f_name in os.listdir(item):
-            fpath = os.path.join(item, f_name)
-            if os.stat(fpath).st_mtime < today - config['days'] * 86400:
-                if os.path.isfile(fpath):
-                    print("Found " + f_name + ", which is about "
-                          + str(round((today - os.stat(fpath).st_mtime) / 86400)) +
-                          " days old, deleting.")
-                    if not dryrun_mode:
-                        os.remove(os.path.join(fpath))
-                    count = count + 1
-
-        print("Done - removed " + str(count) + " files from " + item
-              + ", hopefully that's what was desired.")
-        count = 0
 
     print("0 OK, 0:1")
 
