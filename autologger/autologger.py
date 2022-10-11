@@ -17,16 +17,16 @@ from logging import handlers
 class AutoLogger:
     """
        Extend the logging class with some wrapping
+       Takes config parameter as a dict
+       :param myconfig: dict containing [loglevel, logfile, logfileretention]
     """
 
     def __init__(self, myconfig):
 
-        self.has_tty = sys.stdout.isatty()
-        self.myname = sys.argv[0]
-        self.logger = logging.getLogger(self.myname)
+        self.logger = logging.getLogger(sys.argv[0])
         self.msgformat = '%(asctime)s %(name)s %(levelname)s: %(message)s'
         self.datefmt = '%Y-%m-%d %H:%M:%S'
-        self.alformat = logging.Formatter(self.msgformat, self.datefmt)
+        alformat = logging.Formatter(self.msgformat, self.datefmt)
         self.loglevel = myconfig['loglevel']
         self.logpath = Path(myconfig['logfile'])
 
@@ -34,26 +34,26 @@ class AutoLogger:
         # Basic config takes a string for format, not a formatter object, unlike the handlers.
         # Probably some reason for this, but anyway.
         logging.basicConfig(format=self.msgformat, level=myconfig['loglevel'], datefmt=self.datefmt)
-        self.slh = handlers.SysLogHandler()
-        self.flh = handlers.TimedRotatingFileHandler(self.logpath,
-                                                     backupCount=myconfig['logfileretention'],
-                                                     atTime='midnight')
-        self.clh = logging.StreamHandler()  # console logger
+        slh = handlers.SysLogHandler()
+        flh = handlers.TimedRotatingFileHandler(self.logpath,
+                                                backupCount=myconfig['logfileretention'],
+                                                atTime='midnight')
+        clh = logging.StreamHandler()  # console logger
 
-        if self.has_tty:
-            self.clh.setLevel(logging.NOTSET)  # catch anything and copy to the console
+        if sys.stdout.isatty():
+            clh.setLevel(logging.NOTSET)  # catch anything and copy to the console
         else:
-            self.clh.setLevel(logging.CRITICAL)  # or only send critical errors to the console
+            clh.setLevel(logging.CRITICAL)  # or only send critical errors to the console
 
-        self.clh.setFormatter(self.alformat)
-        self.slh.setFormatter(self.alformat)
-        self.flh.setFormatter(self.alformat)
+        clh.setFormatter(alformat)
+        slh.setFormatter(alformat)
+        flh.setFormatter(alformat)
 
         # Remove any default handlers before adding the ones we want
         self.logger.handlers = []
-        self.logger.addHandler(self.slh)
-        self.logger.addHandler(self.flh)
-        self.logger.addHandler(self.clh)
+        self.logger.addHandler(slh)
+        self.logger.addHandler(flh)
+        self.logger.addHandler(clh)
 
     def syslog(self, level, message):
         """
