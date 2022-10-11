@@ -107,7 +107,6 @@ def main():
     configfile_path = DEFAULT_CONFIGPATH
 
     today = time.time()
-    count = 0
 
     cli = parse_cmdline()
     DEBUG = cli.debug
@@ -117,6 +116,9 @@ def main():
     if DEBUG:
         print(config)
 
+    if dryrun_mode:
+        print("Won't do anything for real")
+    print(today)
     print("0 OK, 0:1")
 
 
