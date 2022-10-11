@@ -16,6 +16,8 @@ import yaml
 
 # Set global DEBUG to false by default, can be changed with CLI flag
 DEBUG = False
+DEFAULT_CONFIGNAME = "cleanup-config.yml"
+DEFAULT_CONFIGPATH = "/usr/local/etc/"
 
 
 def logger():
@@ -102,8 +104,8 @@ def main():
     global DEBUG
 
     # Set standard defaults here
-    configfile_name = "cleanup-config.yml"
-    configfile_path = "/usr/local/etc/"
+    configfile_name = DEFAULT_CONFIGNAME
+    configfile_path = DEFAULT_CONFIGPATH
 
     today = time.time()
     count = 0

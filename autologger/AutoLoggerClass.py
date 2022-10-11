@@ -1,17 +1,18 @@
 """
     Logger class for automatons
-    Uses the python logging class for use with automatons in order to provide standardised logging
-    We're extending the class here with a wrapper, so we could replace the logger 'back end' in the future
+    Uses the python logging class for use with automatons in order to provide standardised
+    logging.
+    We're extending the class here with a wrapper, so we could replace the logger 'back end'
+    in the future.
     We will write execution info to syslog, and details to the program log.
     If we're running from a console, duplicate the syslog data to console.
 """
 
 import logging
-import platform
-import os
 import sys
 from pathlib import Path
 from logging import handlers
+
 
 class AutoLogger:
     """
@@ -34,14 +35,15 @@ class AutoLogger:
         # Probably some reason for this, but anyway.
         logging.basicConfig(format=self.msgformat, level=myconfig['loglevel'], datefmt=self.datefmt)
         self.slh = handlers.SysLogHandler()
-        self.flh = handlers.TimedRotatingFileHandler(self.logpath, backupCount=myconfig['logfileretention'],
-                                                atTime='midnight')
+        self.flh = handlers.TimedRotatingFileHandler(self.logpath,
+                                                     backupCount=myconfig['logfileretention'],
+                                                     atTime='midnight')
         self.clh = logging.StreamHandler()  # console logger
 
         if self.has_tty:
             self.clh.setLevel(logging.NOTSET)  # catch anything and copy to the console
         else:
-            self.clh.setLevel(logging.CRITICAL)  # only send critical errors to the console otherwise
+            self.clh.setLevel(logging.CRITICAL)  # or only send critical errors to the console
 
         self.clh.setFormatter(self.alformat)
         self.slh.setFormatter(self.alformat)
@@ -61,7 +63,6 @@ class AutoLogger:
             Write some input to the system log.
             If running from a console, duplicate there.
         """
-
 
         return True
 
