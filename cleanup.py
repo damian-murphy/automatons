@@ -20,16 +20,13 @@ DEFAULT_CONFIGNAME = "cleanup-config.yml"
 DEFAULT_CONFIGPATH = "/usr/local/etc/"
 
 
-def logger():
-    # TODO: standardise the logging
-    # Need to output to screen if it's a tty (so check isatty())
-    # Log the files to a specific log and then log activity to syslog
-    # standardise this into a module
+def logger(myconfig):
     """
     Instantiate the logger
     :return:
     """
-    return True
+    log = autologger(myconfig)
+    return log
 
 
 def parse_cmdline():
@@ -118,24 +115,27 @@ def main():
     if DEBUG:
         print(config)
 
+    # Get log object
+    log = logger(config)
+
     for item in config['directory_targets']:
         # take a folder at a time, obvs.
         for f_name in os.listdir(item):
             fpath = os.path.join(item, f_name)
             if os.stat(fpath).st_mtime < today - config['days'] * 86400:
                 if os.path.isfile(fpath):
-                    print("Found " + f_name + ", which is about "
+                    log("Found " + f_name + ", which is about "
                           + str(round((today - os.stat(fpath).st_mtime) / 86400)) +
                           " days old, deleting.")
                     if not dryrun_mode:
                         os.remove(os.path.join(fpath))
                     count = count + 1
 
-        print("Done - removed " + str(count) + " files from " + item
+        log("Done - removed " + str(count) + " files from " + item
               + ", hopefully that's what was desired.")
         count = 0
 
-    print("0 OK, 0:1")
+    log("0 OK, 0:1")
 
 
 if __name__ == "__main__":
