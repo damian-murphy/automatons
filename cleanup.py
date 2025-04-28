@@ -17,7 +17,7 @@ import yaml
 # Set global DEBUG to false by default, can be changed with CLI flag
 DEBUG = False
 DEFAULT_CONFIGNAME = "cleanup-config.yml"
-DEFAULT_CONFIGPATH = "/usr/local/etc/"
+DEFAULT_CONFIGPATH = "/usr/local/etc"
 
 
 def logger():
@@ -114,6 +114,9 @@ def main():
     DEBUG = cli.debug
     dryrun_mode = cli.dry_run
     config = load_config(configfile_path, configfile_name)
+    # stop if the config file fails to load
+    if not config:
+        sys.exit(2)
 
     if DEBUG:
         print(config)
