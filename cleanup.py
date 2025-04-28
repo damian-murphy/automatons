@@ -88,7 +88,7 @@ def load_config(confpath, configfile):
 
     # Load the config file
     try:
-        config = yaml.safe_load(open(confpath + "/" + configfile, 'r'))
+        config = yaml.safe_load(open(searchpath + "/" + configfile, 'r'))
         # TODO: Put in checks here so that the config is confirmed or set to some defaults.
         return config
     except (yaml.YAMLError, IOError) as err:
